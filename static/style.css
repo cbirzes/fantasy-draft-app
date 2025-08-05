@@ -1,0 +1,244 @@
+/* static/style.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #F5CB5C;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    margin: 0 auto;
+    font-size: 3em; /* made bigger for emphasis */
+    font-weight: bold;
+    text-align: center;
+    color: #242423;
+}
+
+.board {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 20px;
+    padding-bottom: 20px;
+}
+
+.slot-label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 1em;
+    font-weight: bold;
+    color: #242423; /* Or any color from your palette */
+    text-align: center;
+}
+
+.column {
+    flex: 0 0 auto;
+    width: 220px;
+    background: #CFDBD5;
+    border: 1px solid #333533;
+    border-radius: 6px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.column h2 {
+    text-align: center;
+    margin-top: 0;
+    font-size: 1.2em;
+    color: #242423;
+}
+
+.player-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.player-card {
+    position: relative;  /* for absolute positioning children */
+    background: #E8EDDF;
+    padding: 3px;
+    border: 0.5px solid #333533;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* Player Name Button - fills full width */
+.name-button {
+    background: none;
+    border: none;
+    color: #007BFF;
+    font-weight: bold;
+    font-size: 1em;
+    text-align: left;
+    padding: 0;
+    cursor: pointer;
+    width: 100%; /* full width so plus button does not interfere */
+}
+
+.name-button:hover {
+    text-decoration: underline;
+}
+
+/* Plus button fixed near top-right, 25px left of tier badge */
+.plus-button {
+    position: absolute;
+    top: 4px;
+    right: 29px;  /* 4px (tier badge right) + 20px (badge width) + 5px gap = 29px */
+    background-color: #28a745;
+    border: none;
+    color: white;
+    font-size: 1.1em;
+    font-weight: bold;
+    border-radius: 4px;
+    padding: 0 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    z-index: 2;  /* above player card but below tier badge */
+    height: 20px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.plus-button:hover {
+    background-color: #218838;
+}
+
+.team-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 0.9em;
+    color: #242423;
+}
+
+.team-logo {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.team-info span:first-of-type {
+    margin-left: -8px;
+    margin-right: auto;
+}
+
+.details {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-size: 0.8em;
+    color: #555;
+    width: 100%;
+    justify-content: flex-end;
+}
+
+.tier-badge {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    color: white;
+    font-size: 0.75em;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3; /* above plus button */
+}
+
+/* Tier color styling */
+.tier-1 .tier-badge { background-color: magenta; }
+.tier-2 .tier-badge { background-color: green; }
+.tier-3 .tier-badge { background-color: rgb(123, 243, 71); color: black }
+.tier-4 .tier-badge { background-color: yellow; color: black; }
+.tier-5 .tier-badge { background-color: orange; }
+.tier-6 .tier-badge { background-color: rgb(248, 101, 38); }
+.tier-7 .tier-badge { background-color: red; }
+.tier-8 .tier-badge { background-color: rgb(80, 79, 79); }
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* center content horizontally */
+    margin-bottom: 20px;
+    gap: 20px;
+    position: relative;
+}
+
+/* Put current pick card on the left */
+.current-pick-card {
+    position: absolute;
+    left: 0;
+    background: #CFDBD5;
+    border: 2px solid #333533;
+    border-radius: 6px;
+    padding: 10px 18px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.current-pick-text {
+    font-weight: 600;
+    font-size: 1.6em;
+    color: #242423;
+    margin-right: 20px;
+}
+
+.reset-button {
+    background-color: #E8EDDF;
+    border: none;
+    color: #242423;
+    font-weight: 500;
+    font-size: 1em;
+    padding: 6px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.reset-button:hover {
+    background-color: red;
+}
+
+.toggle-button {
+    background-color: #E8EDDF;
+    color: #242423;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 14px;
+    font-weight: 500;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.toggle-button:hover {
+    background-color: green;
+}
+
+.navbar {
+    width: 100%;
+    background-color: #CFDBD5;
+    border: 2px solid #333533;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+}
+
+.navbar-left {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}

@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Fantasy Draft Board{% endblock %}
+
+{% block content %}
+    <div class="header-container">
+        <div class="current-pick-card">
+            <span class="current-pick-text">Current Pick: {{ current_pick }}</span>
+        </div>
+        <h1>2025 Fantasy Draft Board</h1>
+    </div>
+
+    <div class="board">
+        <!-- My Team Column -->
+        <div class="column" id="my-team-column">
+            <h2>My Team</h2>
+            <div class="player-grid">
+                {% for slot, players in my_team.items() %}
+                <div class="position-slot">
+                    <strong class="slot-label">{{ slot }}</strong>
+                    {% for player in players %}
+                    <div class="player-card tier-{{ player['tier'] }}">
+                        <div class="tier-badge">{{ player['tier'] }}</div>
+                        <div class="name-button">{{ player['name'] }}</div>
+                        <div class="team-info">
+                            <img src="{{ url_for('static', filename='logos/' + player['team']|lower + '.png') }}" alt="{{ player['team'] }}" class="team-logo">
+                            <span>{{ player['team'] }}</span>
+                            <span>Bye: {{ player['bye_week'] }}</span>
+                            <span>SOS: {{ player['SOS'] }}/5</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Divider -->
+        <div id="my-divider" class="divider"></div>
+
+        <!-- Position Columns -->
+        {% for position, players in positions.items() %}
+        <div class="column">
+            <h2>{{ position }}</h2>
+            <div class="player-grid">
+                {% for _, player in players.iterrows() %}
+                <div class="player-card tier-{{ player['tier'] }}">
+                    <div class="tier-badge">{{ player['tier'] }}</div>
+                    <form method="POST" action="{{ url_for('draft_player', player_id=player['player_id']) }}">
+                        <button type="submit" class="name-button">{{ player['name'] }}</button>
+                    </form>
+                    <form method="POST" action="{{ url_for('add_to_my_team', player_id=player['player_id']) }}">
+                        <button type="submit" class="plus-button" title="Draft to My Team">&#43;</button>
+                    </form>
+                    <div class="team-info">
+                        <img src="{{ url_for('static', filename='logos/' + player['team']|lower + '.png') }}" alt="{{ player['team'] }}" class="team-logo">
+                        <span>{{ player['team'] }}</span>
+                        <span>Bye: {{ player['bye_week'] }}</span>
+                        <span>SOS: {{ player['SOS'] }}/5</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.getElementById("toggle-my-team").addEventListener("click", function () {
+        const myTeamColumn = document.getElementById("my-team-column");
+        const isHidden = myTeamColumn.style.display === "none";
+        const myDivider = document.getElementById("my-divider");
+
+        if (isHidden) {
+            myTeamColumn.style.display = "block";
+            myDivider.style.display = "block";
+            this.textContent = "Hide My Team";
+        } else {
+            myTeamColumn.style.display = "none";
+            myDivider.style.display = "none";
+            this.textContent = "Show My Team";
+        }
+    });
+</script>
+{% endblock %}
